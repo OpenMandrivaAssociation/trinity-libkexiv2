@@ -12,16 +12,6 @@
 %define pkg_rel 2
 
 %define tde_pkg libkexiv2
-%define tde_prefix /opt/trinity
-%define tde_bindir %{tde_prefix}/bin
-%define tde_datadir %{tde_prefix}/share
-%define tde_docdir %{tde_datadir}/doc
-%define tde_includedir %{tde_prefix}/include
-%define tde_libdir %{tde_prefix}/%{_lib}
-%define tde_tdeappdir %{tde_datadir}/applications/tde
-%define tde_tdedocdir %{tde_docdir}/tde
-%define tde_tdeincludedir %{tde_includedir}/tde
-%define tde_tdelibdir %{tde_libdir}/trinity
 
 %define libkexiv %{_lib}kexiv
 
@@ -48,7 +38,7 @@ License:	GPLv2+
 #Vendor:		Trinity Desktop
 #Packager:	Francois Andriot <francois.andriot@free.fr>
 
-Prefix:			%{tde_prefix}
+Prefix:			/opt/trinity
 
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
@@ -57,11 +47,12 @@ BuildOption:    -DCMAKE_BUILD_TYPE="RelWithDebInfo"
 BuildOption:    -DCMAKE_SKIP_RPATH=OFF
 BuildOption:    -DCMAKE_SKIP_INSTALL_RPATH=OFF
 BuildOption:    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-BuildOption:    -DCMAKE_INSTALL_PREFIX="%{tde_prefix}"
-BuildOption:    -DINCLUDE_INSTALL_DIR="%{tde_tdeincludedir}"
-BuildOption:    -DLIB_INSTALL_DIR="%{tde_libdir}"
+BuildOption:    -DCMAKE_INSTALL_PREFIX="%{prefix}"
+BuildOption:    -DINCLUDE_INSTALL_DIR="%{prefix}/include/tde"
+BuildOption:    -DLIB_INSTALL_DIR="%{prefix}/%{_lib}"
 BuildOption:    -DWITH_ALL_OPTIONS=ON -DBUILD_ALL=ON -DBUILD_DOC=ON
 BuildOption:    -DBUILD_TRANSLATIONS=ON
+BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
 BuildRequires:	trinity-tdelibs-devel >= %{tde_version}
 BuildRequires:	desktop-file-utils
@@ -103,8 +94,8 @@ Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 
 %files -n trinity-%{libkexiv}2-5
 %defattr(-,root,root,-)
-%{tde_libdir}/libkexiv2.so.5
-%{tde_libdir}/libkexiv2.so.5.0.0
+%{prefix}/%{_lib}/libkexiv2.so.5
+%{prefix}/%{_lib}/libkexiv2.so.5.0.0
 
 ##########
 
@@ -123,13 +114,13 @@ Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 
 %files -n trinity-%{libkexiv}2-devel
 %defattr(-,root,root,-)
-%{tde_libdir}/libkexiv2.so
-%{tde_libdir}/libkexiv2.la
-%{tde_tdeincludedir}/libkexiv2/
-%{tde_libdir}/pkgconfig/libkexiv2.pc
+%{prefix}/%{_lib}/libkexiv2.so
+%{prefix}/%{_lib}/libkexiv2.la
+%{prefix}/include/tde/libkexiv2/
+%{prefix}/%{_lib}/pkgconfig/libkexiv2.pc
 
 
 %conf -p
 unset QTDIR QTINC QTLIB
-export PATH="%{tde_bindir}:${PATH}"
+export PATH="%{prefix}/bin:${PATH}"
 
