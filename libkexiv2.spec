@@ -9,9 +9,11 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 2
+%define pkg_rel 3
 
 %define tde_pkg libkexiv2
+
+%define tde_prefix /opt/trinity
 
 %define libkexiv %{_lib}kexiv
 
@@ -47,9 +49,9 @@ BuildOption:    -DCMAKE_BUILD_TYPE="RelWithDebInfo"
 BuildOption:    -DCMAKE_SKIP_RPATH=OFF
 BuildOption:    -DCMAKE_SKIP_INSTALL_RPATH=OFF
 BuildOption:    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-BuildOption:    -DCMAKE_INSTALL_PREFIX="%{prefix}"
-BuildOption:    -DINCLUDE_INSTALL_DIR="%{prefix}/include/tde"
-BuildOption:    -DLIB_INSTALL_DIR="%{prefix}/%{_lib}"
+BuildOption:    -DCMAKE_INSTALL_PREFIX="%{tde_prefix}"
+BuildOption:    -DINCLUDE_INSTALL_DIR="%{tde_prefix}/include/tde"
+BuildOption:    -DLIB_INSTALL_DIR="%{tde_prefix}/%{_lib}"
 BuildOption:    -DWITH_ALL_OPTIONS=ON -DBUILD_ALL=ON -DBUILD_DOC=ON
 BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
@@ -94,8 +96,8 @@ Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 
 %files -n trinity-%{libkexiv}2-5
 %defattr(-,root,root,-)
-%{prefix}/%{_lib}/libkexiv2.so.5
-%{prefix}/%{_lib}/libkexiv2.so.5.0.0
+%{tde_prefix}/%{_lib}/libkexiv2.so.5
+%{tde_prefix}/%{_lib}/libkexiv2.so.5.0.0
 
 ##########
 
@@ -114,13 +116,13 @@ Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 
 %files -n trinity-%{libkexiv}2-devel
 %defattr(-,root,root,-)
-%{prefix}/%{_lib}/libkexiv2.so
-%{prefix}/%{_lib}/libkexiv2.la
-%{prefix}/include/tde/libkexiv2/
-%{prefix}/%{_lib}/pkgconfig/libkexiv2.pc
+%{tde_prefix}/%{_lib}/libkexiv2.so
+%{tde_prefix}/%{_lib}/libkexiv2.la
+%{tde_prefix}/include/tde/libkexiv2/
+%{tde_prefix}/%{_lib}/pkgconfig/libkexiv2.pc
 
 
 %conf -p
 unset QTDIR QTINC QTLIB
-export PATH="%{prefix}/bin:${PATH}"
+export PATH="%{tde_prefix}/bin:${PATH}"
 
