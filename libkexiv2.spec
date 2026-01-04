@@ -9,7 +9,7 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 3
+%define pkg_rel 4
 
 %define tde_pkg libkexiv2
 
@@ -37,21 +37,14 @@ URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-#Vendor:		Trinity Desktop
-#Packager:	Francois Andriot <francois.andriot@free.fr>
-
-Prefix:			/opt/trinity
 
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
 BuildSystem:    cmake
+
 BuildOption:    -DCMAKE_BUILD_TYPE="RelWithDebInfo"
-BuildOption:    -DCMAKE_SKIP_RPATH=OFF
-BuildOption:    -DCMAKE_SKIP_INSTALL_RPATH=OFF
-BuildOption:    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-BuildOption:    -DCMAKE_INSTALL_PREFIX="%{tde_prefix}"
-BuildOption:    -DINCLUDE_INSTALL_DIR="%{tde_prefix}/include/tde"
-BuildOption:    -DLIB_INSTALL_DIR="%{tde_prefix}/%{_lib}"
+BuildOption:    -DCMAKE_INSTALL_PREFIX=%{tde_prefix}
+BuildOption:    -DINCLUDE_INSTALL_DIR=%{tde_prefix}/include/tde
 BuildOption:    -DWITH_ALL_OPTIONS=ON -DBUILD_ALL=ON -DBUILD_DOC=ON
 BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
