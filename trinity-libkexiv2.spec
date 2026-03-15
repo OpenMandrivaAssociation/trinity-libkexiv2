@@ -89,7 +89,7 @@ Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 %package -n trinity-%{devname}
 Group:		Development/Libraries/Other
 Summary:	Qt like interface for the libexiv2 library (development) [Trinity]
-Requires:	trinity-%{libname}-5 = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	trinity-%{libname}-5 = %{EVRD}
 
 %description -n trinity-%{devname}
 libkexif2-devel contains development files and documentation for libkexiv2
