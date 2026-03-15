@@ -1,9 +1,5 @@
 %bcond clang 1
 
-# BUILD WARNING:
-#  Remove qt-devel and qt3-devel and any kde*-devel on your system !
-#  Having KDE libraries may cause FTBFS here !
-
 # TDE variables
 %define tde_epoch 2
 %if "%{?tde_version}" == ""
@@ -15,7 +11,8 @@
 
 %define tde_prefix /opt/trinity
 
-%define libkexiv %{_lib}kexiv
+%define libname %mklibname kexiv2
+%define devname %mklibname kexiv2 -d
 
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
@@ -26,19 +23,17 @@
 
 %define tarball_name %{tde_pkg}-trinity
 
-
 Name:		trinity-%{tde_pkg}
 Epoch:		2
 Version:	0.1.7
-Release:	%{?tde_version}_%{?!preversion:%{pkg_rel}}%{?preversion:0_%{preversion}}%{?dist}
+Release:	%{?tde_version:%{tde_version}_}5
 Summary:	Qt like interface for the libexiv2 library (runtime) [Trinity]
 Group:		System/Libraries
 URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-
-Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
+Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}.tar.xz
 
 BuildSystem:    cmake
 
@@ -76,38 +71,32 @@ Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 
 ##########
 
-%package -n trinity-%{libkexiv}2-5
+%package -n trinity-%{libname}-5
 Summary:	Qt like interface for the libexiv2 library (runtime) [Trinity]
 Group:		System/Libraries
 
-Obsoletes:	trinity-%{tde_pkg} < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	trinity-%{tde_pkg} = %{?epoch:%{epoch}:}%{version}-%{release}
-
-%description -n trinity-%{libkexiv}2-5
+%description -n trinity-%{libname}-5
 libkexif2 contains the library of libkexiv2.
 Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 
-%files -n trinity-%{libkexiv}2-5
+%files -n trinity-%{libname}-5
 %defattr(-,root,root,-)
 %{tde_prefix}/%{_lib}/libkexiv2.so.5
 %{tde_prefix}/%{_lib}/libkexiv2.so.5.0.0
 
 ##########
 
-%package -n trinity-%{libkexiv}2-devel
+%package -n trinity-%{devname}
 Group:		Development/Libraries/Other
 Summary:	Qt like interface for the libexiv2 library (development) [Trinity]
-Requires:	trinity-%{libkexiv}2-5 = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	trinity-%{libname}-5 = %{?epoch:%{epoch}:}%{version}-%{release}
 
-Obsoletes:	trinity-%{tde_pkg}-devel < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:	trinity-%{tde_pkg}-devel = %{?epoch:%{epoch}:}%{version}-%{release}
-
-%description -n trinity-%{libkexiv}2-devel
+%description -n trinity-%{devname}
 libkexif2-devel contains development files and documentation for libkexiv2
 library.  The library documentation is available on kexiv2.h header file.
 Libkexif is a wrapper around Exiv2 library to manipulate pictures metadata.
 
-%files -n trinity-%{libkexiv}2-devel
+%files -n trinity-%{devname}
 %defattr(-,root,root,-)
 %{tde_prefix}/%{_lib}/libkexiv2.so
 %{tde_prefix}/%{_lib}/libkexiv2.la
