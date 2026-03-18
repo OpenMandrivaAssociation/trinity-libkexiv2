@@ -1,11 +1,9 @@
 %bcond clang 1
 
 # TDE variables
-%define tde_epoch 2
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 4
 
 %define tde_pkg libkexiv2
 
@@ -24,7 +22,6 @@
 %define tarball_name %{tde_pkg}-trinity
 
 Name:		trinity-%{tde_pkg}
-Epoch:		2
 Version:	0.1.7
 Release:	%{?tde_version:%{tde_version}_}5
 Summary:	Qt like interface for the libexiv2 library (runtime) [Trinity]
