@@ -42,8 +42,10 @@ BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
 BuildRequires:	trinity-tdelibs-devel >= %{tde_version}
-BuildRequires:	desktop-file-utils
+BuildRequires:  tqt3-dev-tools
 BuildRequires:	trinity-tde-cmake >= %{tde_version}
+
+BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 
 %{!?with_clang:BuildRequires:	gcc-c++}
