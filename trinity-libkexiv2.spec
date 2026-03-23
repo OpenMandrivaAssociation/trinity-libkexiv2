@@ -23,7 +23,7 @@
 
 Name:		trinity-%{tde_pkg}
 Version:	0.1.7
-Release:	%{?tde_version:%{tde_version}_}5
+Release:	%{?tde_version:%{tde_version}_}6
 Summary:	Qt like interface for the libexiv2 library (runtime) [Trinity]
 Group:		System/Libraries
 URL:		http://www.trinitydesktop.org/
@@ -42,7 +42,6 @@ BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
 BuildRequires:	trinity-tdelibs-devel >= %{tde_version}
-BuildRequires:  tqt3-dev-tools
 BuildRequires:	trinity-tde-cmake >= %{tde_version}
 
 BuildRequires:	desktop-file-utils
