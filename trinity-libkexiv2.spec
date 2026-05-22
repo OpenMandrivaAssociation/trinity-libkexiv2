@@ -1,10 +1,6 @@
 %bcond clang 1
 
 # TDE variables
-%if "%{?tde_version}" == ""
-%define tde_version 14.1.5
-%endif
-
 %define tde_pkg libkexiv2
 
 %define tde_prefix /opt/trinity
@@ -17,20 +13,20 @@
 %define _disable_rebuild_configure 1
 
 # fixes error: Empty %files file …/debugsourcefiles.list
-%define _debugsource_template %{nil}
+%undefine _debugsource_template
 
 %define tarball_name %{tde_pkg}-trinity
 
 Name:		trinity-%{tde_pkg}
-Version:	0.1.7
-Release:	%{?tde_version:%{tde_version}_}6
+Version:	14.1.6
+Release:	1
 Summary:	Qt like interface for the libexiv2 library (runtime) [Trinity]
 Group:		System/Libraries
 URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}.tar.xz
+Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{version}/main/libraries/%{tarball_name}-%{version}.tar.xz
 
 BuildSystem:    cmake
 
@@ -41,8 +37,8 @@ BuildOption:    -DWITH_ALL_OPTIONS=ON -DBUILD_ALL=ON -DBUILD_DOC=ON
 BuildOption:    -DBUILD_TRANSLATIONS=ON
 BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
-BuildRequires:	trinity-tdelibs-devel >= %{tde_version}
-BuildRequires:	trinity-tde-cmake >= %{tde_version}
+BuildRequires:	trinity-tdelibs-devel >= %{version}
+BuildRequires:	trinity-tde-cmake >= %{version}
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
